@@ -1,5 +1,5 @@
 # Accounting Applications Framework
 - Feature List
-- Over Architecture 
+- Overall Architecture 
 - Detailed Class Diagram
 - Implementation

@@ -1,6 +1,6 @@
 # Accounting Applications Framework
 
-"Object-Oriented Design" course project, IUST, Dr. Ashtiani, Fall 2021
+**"Object-Oriented Design"** course project, IUST, Dr. Ashtiani, Fall 2021
 
 Project contributors:
 

@@ -15,7 +15,7 @@ public class TransactionsList {
             sender.setBalance(senderCurrentDeposit - amount);
             receiver.setBalance(receiverCurrentDeposit + amount);
 
-            Transaction transaction = new Transaction(amount, sender, receiver, LocalDate.now());
+            Transaction transaction = new Transaction(amount, sender, receiver, LocalDateTime.now());
             transactions.add(transaction);
         }
         else

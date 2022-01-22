@@ -1,17 +1,16 @@
 package Account;
 
 import Customer.Customer;
+
 import java.time.*;
-import java.util.*;  
+import java.util.*;
 
 public class AccountManager {
 
-    public List<Account> Accounts = new ArrayList<Account>();  
+    public List<Account> Accounts = new ArrayList<Account>();
 
-    public Account addAccount(Float balance, Customer customer) {
-        Account NewAccount = new Account(balance, LocalDateTime.now(), customer);
-        Accounts.add(NewAccount);
-        return NewAccount;
+    public void addAccount(Float balance, Customer customer) {
+        Accounts.add(new Account(balance, LocalDateTime.now(), customer));
     }
 
     public void closeAccount(Account account) {
@@ -19,9 +18,8 @@ public class AccountManager {
     }
 
     public boolean withdrawMoney(Account account, float amount) {
-        if(amount > account.getBalance()){
+        if (amount > account.getBalance())
             return false;
-        }
 
         account.setBalance(account.getBalance() - amount);
         return true;
@@ -31,23 +29,19 @@ public class AccountManager {
         account.setBalance(account.getBalance() + amount);
     }
 
-    public Account FindById(Integer accountId){
-        for (Account account : Accounts) {
-            if (account.getAccountId() == accountId){
+    public Account FindById(int accountId) {
+        for (Account account : Accounts)
+            if (account.getAccountId() == accountId)
                 return account;
-            }
-        }
         return null;
     }
 
-    public List<Account> GetAllAccountsOfCustomer(Customer customer){
+    public List<Account> GetAllAccountsOfCustomer(Customer customer) {
         List<Account> results = new LinkedList<Account>();
 
-        for (Account account : Accounts) {
-            if (account.getCustomer().getCustomerId() == customer.getCustomerId()){
+        for (Account account : Accounts)
+            if (account.getCustomer().getCustomerId() == customer.getCustomerId())
                 results.add(account);
-            }
-        }
         return results;
     }
 }

@@ -1,7 +1,6 @@
 package Transaction;
 
 import Account.Account;
-import Customer.Customer;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,8 +37,7 @@ public class Transaction {
         return receiver;
     }
 
-    public LocalDateTime getDateOfTransaction(){
+    public LocalDateTime getDateOfTransaction() {
         return dateOfTransaction;
     }
-
 }

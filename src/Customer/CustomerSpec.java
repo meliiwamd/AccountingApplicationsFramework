@@ -1,25 +1,34 @@
 package Customer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CustomerSpec {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String nationalId;
-    private Gender gender;
-    private City city;
-    private Country country;
+    private HashMap<String, String> properties = new HashMap<>();
 
     public CustomerSpec(String firstName, String lastName, String email, String nationalId, Gender gender, City city, Country country) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.nationalId = nationalId;
-        this.gender = gender;
-        this.city = city;
-        this.country = country;
+        this.properties.put("firstName", firstName);
+        this.properties.put("lastName", lastName);
+        this.properties.put("email", email);
+        this.properties.put("nationalId", nationalId);
+        this.properties.put("gender", gender.toString());
+        this.properties.put("city", city.toString());
+        this.properties.put("country", country.toString());
     }
 
-    public boolean matches(CustomerSpec otherCustomer) {
+    public HashMap<String, String> getProperties() {
+        return properties;
+    }
+
+    public boolean matches(CustomerSpec otherSpec) {
+        for (String propertyName : this.getProperties().keySet()) {
+            if (!properties.get(propertyName).equals(otherSpec.getProperties().get(propertyName)))
+                return false;
+        }
         return true;
+    }
+
+    public void replaceProperty(String key, Map<String, String> newValues) {
+        this.getProperties().replace(key, newValues.get(key));
     }
 }

@@ -1,8 +1,5 @@
 package Customer;
 
-import Account.Account;
-
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Customer {
@@ -23,10 +20,6 @@ public class Customer {
         return customerId;
     }
 
-//    public List<Account> getAllAccounts() {
-//        return;
-//    }
-
     public void setSalary(float salary) {
         this.salary = salary;
     }
@@ -41,6 +34,10 @@ public class Customer {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setSpec(CustomerSpec spec) {
+        this.spec = spec;
     }
 
     public CustomerSpec getSpec() {

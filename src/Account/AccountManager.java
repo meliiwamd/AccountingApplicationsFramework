@@ -39,4 +39,15 @@ public class AccountManager {
         }
         return null;
     }
+
+    public List<Account> GetAllAccountsOfCustomer(Customer customer){
+        List<Account> results = new LinkedList<Account>();
+
+        for (Account account : Accounts) {
+            if (account.getCustomer().getCustomerId() == customer.getCustomerId()){
+                results.add(account);
+            }
+        }
+        return results;
+    }
 }

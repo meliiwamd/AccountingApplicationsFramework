@@ -6,19 +6,16 @@ import java.util.List;
 public class TransactionsList {
     private List<Transaction> transactions = new List<Transaction>();
 
-    public void addTransaction(Transaction transaction) {
-        Account sender = transaction.getSender();
+    public void addTransaction(Account sender, Account receiver, float amount) {
         float senderCurrentDeposit = sender.getBalance();
-
-        Account receiver = transaction.getReceiver();
         float receiverCurrentDeposit = receiver.getBalance();
 
-        float amount = transaction.getAmount();
-
-        if(senderCurrentDeposit > amount + 5)
+        if(senderCurrentDeposit > amount + 5000)
         {
             sender.setBalance(senderCurrentDeposit - amount);
             receiver.setBalance(receiverCurrentDeposit + amount);
+
+            Transaction transaction = new Transaction(amount, sender, receiver, LocalDate.now());
             transactions.add(transaction);
         }
         else

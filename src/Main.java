@@ -1,3 +1,9 @@
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import Account.Account;
@@ -11,6 +17,7 @@ import Transaction.Transaction;
 import Transaction.TransactionsList;
 import Customer.City;
 
+
 public class Main {
     public static Scanner input = new Scanner(System.in);
     public static CustomersList customersList = new CustomersList();
@@ -23,7 +30,7 @@ public class Main {
 
         String menu = "" +
                 "1. Add customer" + "\n" +
-                "2. Search in customers" + "\n" +
+                "2. Filter customers" + "\n" +
                 "3. Edit customer" + "\n" +
                 "4. Get all accounts of customer" + "\n" +
                 "5. Add an account" + "\n" +
@@ -31,17 +38,24 @@ public class Main {
                 "7. Withdraw money" + "\n" +
                 "8. Deposit money" + "\n" +
                 "9. Add transaction" + "\n" +
+                "10. Filter transaction" + "\n" +
                 "0. Exit" + "\n" + 
                 "-1. Show Informations";
 
-        System.out.println(menu);
         while(!isQuit){
-            int command = Integer.parseInt(input.nextLine());
-            if (command == 0){
-                break;
-            }
-            exec(command);
-            System.out.println("************************************************");
+            System.out.println(menu);
+            
+                int command = Integer.parseInt(input.nextLine());
+                if (command == 0){
+                    break;
+                }
+                exec(command);
+                System.out.println("************************************************");
+             
+                // System.out.println("Enter a valid command!");
+
+            
+            
 
         }
     }
@@ -56,14 +70,14 @@ public class Main {
                 AddCustomer();
                 break;
             case 2:
-              // code block
-              break;
+                FilterCustomers();
+                break;
             case 3:
-              // code block
-              break;
+                EditCustomer();
+                break;
             case 4:
-              // code block
-              break;
+                GetAllAccountsOfCustomer();
+                break;
             case 5:
                 AddAccount();
                 break;
@@ -79,6 +93,9 @@ public class Main {
             case 9:
                 AddTransaction();
                 break;
+            case 10:
+                FilterTransaction();
+                break;
             default:
                 System.out.println("undefined command! try again");
 
@@ -88,7 +105,18 @@ public class Main {
     public static void ShowInformation(){
         System.out.println("Showing informations...");
         System.out.println("Customers:");
-        
+        for (Customer customer : customersList.customers) {
+            System.out.println("Customer ID: " + customer.getCustomerId());
+            System.out.println("Address : " + customer.getAddress());
+            System.out.println("Salary : " + customer.getSalary());
+            
+            HashMap<String, String> props = customer.getSpec().getProperties();
+            for (String key : props.keySet()) {
+                System.out.println(key + ": " + props.get(key));
+            }
+            System.out.println("###########");
+        }
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         System.out.println("Accounts:");
         for (Account account : accountManager.Accounts) {
             System.out.println("Account Id: " + account.getAccountId());
@@ -146,10 +174,10 @@ public class Main {
         Country country = Country.values()[integer_County];
 
         System.out.println("City: ");
-        System.out.println("0: NEWYORK | 1: LOSANGELES | 2: WASHINGTON | 3: SANDIEGO | 4: TORONTO | 5: CALGARY");
-        System.out.println("6: MONTREAL | 7: TEHRAN | 8: MASHHAD | 9: ISFAHAN | 10: TABRIZ | 11: PARIS");
-        System.out.println("12: LILLE | 13: MARSEILLE | 14: MOSCOW | 15: SAINTPETERSBURG | 16: KAZAN | 17: LONDON");
-        System.out.println("18: LIVERPOOL | 19: MANCHESTER");
+        System.out.println("0: NEWYORK | 1: LOSANGELES | 2: WASHINGTON | 3: TORONTO | 4: MONTREAL | 5: TEHRAN");
+        System.out.println("6: MASHHAD | 7: ISFAHAN | 8: PARIS | 9: MOSCOW | 10: SAINTPETERSBURG | 11: LONDON");
+        System.out.println("12: MANCHESTER ");
+        
         Integer integer_City = Integer.parseInt(input.nextLine());
         City city = City.values()[integer_City];
 
@@ -159,17 +187,160 @@ public class Main {
         return null;
     }
 
+    public static void FilterCustomers(){
+        System.out.println("Filtering Customers...");
+        System.out.println("FirstName: ");
+        String firstName = input.nextLine();
+        if(firstName == ""){firstName = null;}
+        System.out.println("LastName: ");
+        String lastName = input.nextLine();
+        if(lastName == ""){lastName = null;}
+
+        System.out.println("Email: ");
+        String email = input.nextLine();
+        if(email == ""){email = null;}
+
+        System.out.println("NationalId: ");
+        String nationalId = input.nextLine();
+        if(nationalId == ""){nationalId = null;}
+
+        System.out.println("Gender: ");
+        System.out.println("0: Male | 1: Female ");
+        Gender gender = null;
+        try {
+            Integer integer_gender = Integer.parseInt(input.nextLine());
+            gender = Gender.values()[integer_gender];
+        } catch (Exception e) {
+            
+        }
+        
+        System.out.println("Country: ");
+        System.out.println("0: USA | 1: FRANCE | 2: ENGLAND | 3: IRAN | 4: RUSSIA | 5: CANADA");
+        Country country = null;
+        try {
+            Integer integer_County = Integer.parseInt(input.nextLine());
+            country = Country.values()[integer_County];
+        } catch (Exception e) {
+        }
+        
+
+        System.out.println("City: ");
+        System.out.println("0: NEWYORK | 1: LOSANGELES | 2: WASHINGTON | 3: TORONTO | 4: MONTREAL | 5: TEHRAN");
+        System.out.println("6: MASHHAD | 7: ISFAHAN | 8: PARIS | 9: MOSCOW | 10: SAINTPETERSBURG | 11: LONDON");
+        System.out.println("12: MANCHESTER ");
+        City city = null;
+        try {
+            Integer integer_City = Integer.parseInt(input.nextLine());
+            city = City.values()[integer_City];
+        } catch (Exception e) {
+        }
+        
+        CustomerSpec searchSpec = new CustomerSpec(firstName, lastName, email, nationalId, gender,city, country);
+        List<Customer> Results = customersList.search(searchSpec);
+
+        System.out.println("Results :"); 
+        for (Customer customer : Results) {
+            System.out.println("Customer ID: " + customer.getCustomerId());
+            HashMap<String, String> props = customer.getSpec().getProperties();
+            for (String key : props.keySet()) {
+                System.out.println(key + ": " + props.get(key));
+            }
+            System.out.println("###########");
+        }
+
+        return;
+    }
+
+    public static void EditCustomer(){
+        System.out.println("Edit Customer...");
+        System.out.println("Customer ID: ");
+        Integer customerId = Integer.parseInt(input.nextLine());
+        Customer customer = customersList.FindById(customerId);
+
+        System.out.println("FirstName: ");
+        String firstName = input.nextLine();
+        if(firstName == ""){firstName = null;}
+
+        System.out.println("LastName: ");
+        String lastName = input.nextLine();
+        if(lastName == ""){lastName = null;}
+
+        System.out.println("Email: ");
+        String email = input.nextLine();
+        if(email == ""){email = null;}
+
+        System.out.println("NationalId: ");
+        String nationalId = input.nextLine();
+        if(nationalId == ""){nationalId = null;}
+
+        System.out.println("Gender: ");
+        System.out.println("0: Male | 1: Female ");
+        Gender gender = null;
+        try {
+            Integer integer_gender = Integer.parseInt(input.nextLine());
+            gender = Gender.values()[integer_gender];
+        } catch (Exception e) {}
+
+        System.out.println("Country: ");
+        System.out.println("0: USA | 1: FRANCE | 2: ENGLAND | 3: IRAN | 4: RUSSIA | 5: CANADA");
+        Country country = null;
+        try {
+            Integer integer_County = Integer.parseInt(input.nextLine());
+            country = Country.values()[integer_County];
+        } catch (Exception e) {
+        }
+
+        System.out.println("City: ");
+        System.out.println("0: NEWYORK | 1: LOSANGELES | 2: WASHINGTON | 3: TORONTO | 4: MONTREAL | 5: TEHRAN");
+        System.out.println("6: MASHHAD | 7: ISFAHAN | 8: PARIS | 9: MOSCOW | 10: SAINTPETERSBURG | 11: LONDON");
+        System.out.println("12: MANCHESTER ");
+        City city = null;
+        try {
+            Integer integer_City = Integer.parseInt(input.nextLine());
+            city = City.values()[integer_City];
+        } catch (Exception e) {
+        }
+        HashMap<String, String> properties = new HashMap<>();
+        properties.put("firstName", firstName);
+        properties.put("lastName", lastName);
+        properties.put("email", email);
+        properties.put("nationalId", nationalId);
+        properties.put("gender", gender != null ? gender.toString() : null);
+        properties.put("city", city != null ? city.toString() : null);
+        properties.put("country", country != null ? country.toString() : null);
+
+        customersList.editCustomer(customer, properties);
+        System.out.println("Edited!");
+
+        return;
+    }
+
+    public static void GetAllAccountsOfCustomer(){
+        System.out.println("Get all accounts of Customer...");
+        System.out.println("Customer ID: ");
+        Integer customerId = Integer.parseInt(input.nextLine());
+        Customer customer = customersList.FindById(customerId);
+
+        List<Account> Results = accountManager.GetAllAccountsOfCustomer(customer);
+        System.out.println("Results:");
+
+        for (Account account : Results) {
+            System.out.println("Account Id: " + account.getAccountId());
+            System.out.println("Balance: " + account.getBalance());
+            System.out.println("###########");
+        }
+    }
+
     public static Account AddAccount(){
         System.out.println("Adding new Account...");
         System.out.println("Customer ID:");
         Integer customerId = Integer.parseInt(input.nextLine());
-        
-        Customer test = new Customer("", 0, null);
+        Customer customer = customersList.FindById(customerId);
 
         System.out.println("Balance:");
         Float balance = Float.parseFloat(input.nextLine());
 
-        Account newAccount = accountManager.addAccount(balance, test);
+        Account newAccount = accountManager.addAccount(balance, customer);
         System.out.println("Account added!");
 
         return newAccount;
@@ -240,6 +411,31 @@ public class Main {
         transactionsList.addTransaction(SenderAccount, ReveiverAccount, amount);
         
         System.out.println("Transaction Done!");
+    }
+
+    public static void FilterTransaction(){
+        System.out.println("Filter Transactions...");
+
+        System.out.println("Start DateTime: (example: 31-10-1998 23:37");
+        String startDateTime_string = input.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime startDateTime = LocalDateTime.parse(startDateTime_string, formatter);
+
+        System.out.println("End DateTime: (example: 31-10-1999 23:37");
+        String EndDateTime_string = input.nextLine();
+        LocalDateTime endDateTime = LocalDateTime.parse(EndDateTime_string, formatter);
+
+        List<Transaction> results = transactionsList.search(startDateTime, endDateTime);
+
+        System.out.println("results:");
+        for (Transaction transaction : results) {
+            System.out.println("Transaction Id: " + transaction.getTransactionId());
+            System.out.println("Sender Id: " + transaction.getSender().getAccountId());
+            System.out.println("Receiver Id: " + transaction.getReceiver().getAccountId());
+            System.out.println("Amount: " + transaction.getAmount());
+            System.out.println("DateTime: " + transaction.getDateOfTransaction());
+            System.out.println("###########");
+        }
     }
 
     

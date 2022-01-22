@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomersList {
-    public static List<Customer> customers;
+    public List<Customer> customers = new LinkedList<Customer>();
 
     public Customer addCustomer(String address, float salary, CustomerSpec customerSpec) {
         Customer newCustomer = new Customer(address, salary, customerSpec);
@@ -23,9 +23,19 @@ public class CustomersList {
         return matchingCustomers;
     }
 
+    public Customer FindById(Integer customerId){
+        for (Customer customer : customers) {
+            if (customer.getCustomerId() == customerId){
+                return customer;
+            }
+        }
+        return null;
+    }
     public void editCustomer(Customer customer, Map<String, String> newValues) {
         for (String key: newValues.keySet()) {
             CustomerSpec spec = customer.getSpec();
+            
+            if (newValues.get(key) == null){continue;} 
 
             switch (key) {
                 case "address":

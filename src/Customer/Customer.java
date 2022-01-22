@@ -36,10 +36,6 @@ public class Customer {
         this.address = address;
     }
 
-    public void setSpec(CustomerSpec spec) {
-        this.spec = spec;
-    }
-
     public CustomerSpec getSpec() {
         return spec;
     }

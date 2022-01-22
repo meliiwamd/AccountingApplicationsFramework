@@ -22,6 +22,10 @@ public class Transaction {
         this.dateOfTransaction = dateOfTransaction;
     }
 
+    public int getTransactionId() {
+        return transactionId;
+    }
+
     public float getAmount() {
         return amount;
     }

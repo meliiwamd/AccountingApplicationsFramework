@@ -1,10 +1,12 @@
 package Transaction;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
+import Account.Account;
+import java.util.*;  
+
 
 public class TransactionsList {
-    private List<Transaction> transactions = new List<Transaction>();
+    public List<Transaction> transactions = new ArrayList<Transaction>();
 
     public void addTransaction(Account sender, Account receiver, float amount) {
         float senderCurrentDeposit = sender.getBalance();
@@ -25,8 +27,8 @@ public class TransactionsList {
         }
     }
 
-   public List<Transaction> search(LocalDate startPeriod, LocalDate endPeriod) {
-       List<Transaction> filtered = new List<Transaction>();
+   public List<Transaction> search(LocalDateTime startPeriod, LocalDateTime endPeriod) {
+       List<Transaction> filtered = new ArrayList<Transaction>();
 
        for (Transaction trans : transactions)
        {

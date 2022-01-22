@@ -6,10 +6,10 @@ import java.util.*;
 
 public class AccountManager {
 
-    private static List<Account> Accounts = new ArrayList<Account>();  
+    public List<Account> Accounts = new ArrayList<Account>();  
 
     public Account addAccount(Float balance, Customer customer) {
-        Account NewAccount = new Account(balance, LocalDate.now(), customer);
+        Account NewAccount = new Account(balance, LocalDateTime.now(), customer);
         Accounts.add(NewAccount);
         return NewAccount;
     }
@@ -18,15 +18,25 @@ public class AccountManager {
         Accounts.remove(account);
     }
 
-    public void withdrawMoney(Account account, float amount) {
+    public boolean withdrawMoney(Account account, float amount) {
         if(amount > account.getBalance()){
-            return;
+            return false;
         }
 
         account.setBalance(account.getBalance() - amount);
+        return true;
     }
 
     public void depositMoney(Account account, float amount) {
         account.setBalance(account.getBalance() + amount);
+    }
+
+    public Account FindById(Integer accountId){
+        for (Account account : Accounts) {
+            if (account.getAccountId() == accountId){
+                return account;
+            }
+        }
+        return null;
     }
 }

@@ -33,4 +33,9 @@ public class Transaction {
     public Account getReceiver() {
         return receiver;
     }
+
+    public LocalDateTime getDateOfTransaction(){
+        return dateOfTransaction;
+    }
+
 }

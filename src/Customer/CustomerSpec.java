@@ -6,7 +6,7 @@ import java.util.Map;
 public class CustomerSpec {
     private HashMap<String, String> properties = new HashMap<>();
 
-    public CustomerSpec(String firstName, String lastName, String email , String nationalId, Gender gender, City city, Country country) {
+    public CustomerSpec(String firstName, String lastName, String email, String nationalId, Gender gender, City city, Country country) {
         this.properties.put("firstName", firstName);
         this.properties.put("lastName", lastName);
         this.properties.put("email", email);
@@ -22,7 +22,7 @@ public class CustomerSpec {
 
     public boolean matches(CustomerSpec otherSpec) {
         for (String propertyName : this.getProperties().keySet()) {
-            if (otherSpec.getProperties().get(propertyName) != null){
+            if (otherSpec.getProperties().get(propertyName) != null) {
                 if (!properties.get(propertyName).equals(otherSpec.getProperties().get(propertyName)))
                     return false;
             }

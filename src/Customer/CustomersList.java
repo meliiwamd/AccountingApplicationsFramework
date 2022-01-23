@@ -7,35 +7,32 @@ import java.util.Map;
 public class CustomersList {
     public List<Customer> customers = new LinkedList<Customer>();
 
-    public Customer addCustomer(String address, float salary, CustomerSpec customerSpec) {
-        Customer newCustomer = new Customer(address, salary, customerSpec);
-        customers.add(newCustomer);
-        return newCustomer;
+    public void addCustomer(String address, float salary, CustomerSpec customerSpec) {
+        customers.add(new Customer(address, salary, customerSpec));
     }
 
     public List<Customer> search(CustomerSpec searchSpec) {
         List<Customer> matchingCustomers = new LinkedList<Customer>();
-        for (Customer customer : customers) {
+        for (Customer customer : customers)
             if (customer.getSpec().matches(searchSpec))
                 matchingCustomers.add(customer);
-        }
 
         return matchingCustomers;
     }
 
-    public Customer FindById(Integer customerId){
-        for (Customer customer : customers) {
-            if (customer.getCustomerId() == customerId){
+    public Customer FindById(int customerId) {
+        for (Customer customer : customers)
+            if (customer.getCustomerId() == customerId)
                 return customer;
-            }
-        }
         return null;
     }
+
     public void editCustomer(Customer customer, Map<String, String> newValues) {
-        for (String key: newValues.keySet()) {
+        for (String key : newValues.keySet()) {
             CustomerSpec spec = customer.getSpec();
-            
-            if (newValues.get(key) == null){continue;} 
+
+            if (newValues.get(key) == null)
+                continue;
 
             switch (key) {
                 case "address":
